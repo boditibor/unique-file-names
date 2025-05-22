@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: unique-file-names
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app1:
+    image: tiborb40k/unique-file-names-app:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/unique-file-names
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    volumes:
+      - app1_generated:/app/generated_structure
+
+  app2:
+    image: tiborb40k/unique-file-names-app:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/unique-file-names
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8082:8080"
+    depends_on:
+      - db
+    volumes:
+      - app2_generated:/app/generated_structure
+
+volumes:
+  pgdata:
+  app1_generated:
+  app2_generated:

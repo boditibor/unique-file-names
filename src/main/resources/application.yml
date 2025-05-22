@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: unique-file-names
+  datasource:
+    url: jdbc:postgresql://localhost:5432/unique-file-names
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  web:
+    resource:
+      static-locations: file:build/docs/javadoc/
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
