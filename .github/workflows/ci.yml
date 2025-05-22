@@ -21,3 +21,4 @@ jobs:
         uses: gradle/gradle-build-action@v3
         with:
           arguments: build
+          gradle-version: 8.7
